@@ -1,3 +1,2 @@
 include *.txt 
-recursive-include isityaml *.html 
-
+recursive-include isityaml/templates/isityaml *

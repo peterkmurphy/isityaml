@@ -1,5 +1,6 @@
 from django.template import Context, RequestContext, loader
-from django.http import HttpResponse, Http404, HttpResponseRedirect;
+from django.template.response import TemplateResponse;
+from django.http import Http404, HttpResponseRedirect;
 from django.shortcuts import render_to_response;
 from django.core.context_processors import csrf
 
@@ -17,14 +18,13 @@ from yaml.error import YAMLError;
 import yaml;
 
 class Scanner12(Scanner):
-    ''' This is an updated version of the YAML scanner, so that it handles 1.2
-    adequately.
+    ''' This is an updated version of the YAML scanner that handles Unicode
+        anchors.
     '''
     
     def __init__(self):
         super(Scanner12, self ).__init__();
     
-
     def scan_anchor(self, TokenClass):
         ''' After 1.2, it is clear which characters can be part of an anchor -
             and '[ *alias, value ]' should always report an error because
@@ -42,8 +42,6 @@ class Scanner12(Scanner):
         self.forward()
         length = 0
         ch = self.peek(length)
-#        while u'0' <= ch <= u'9' or u'A' <= ch <= u'Z' or u'a' <= ch <= u'z'    \
-#                or ch in u'-_':
         while ch not in u'\0 \t\r\n\x85\u2028\u2029,[]{}':
             length += 1
             ch = self.peek(length)
@@ -76,37 +74,38 @@ class Loader12(Reader, Scanner12, Parser, Composer, Constructor, Resolver):
 STATE_GET = 0; # Used only for get requests.
 STATE_POST_YES = 1; # Used for successful post (when YAML is parsed).
 STATE_POST_NO = 2; # Used for failed pos
-
+COMMENTSTR = \
+  "# This is a comment. Your YAML stream is good, but contains no documents. "
 
 def index(request):
-    canon = u""; # YAML in canonical form.
-    error = u"" # YAML error messages.
-    original = u"" # The original text. Shown only for error messages.
-    state = STATE_GET # The state of the page.
-    ourmap = {"state": state, "canon": canon, "error": error, "original": original};
-    t = loader.get_template('isityaml/index.html')
+    yamlcanon = u""; # YAML in canonical form.
+    yamlerror = u"" # YAML error messages.
+    yamloriginal = u"" # The original text. Shown only for error messages.
+    yamlstate = STATE_GET # The state of the page.
+    ourmap = {"yamlstate": yamlstate, "yamlcanon": yamlcanon, 
+        "yamlerror": yamlerror, "yamloriginal": yamloriginal};
     if request.method == 'GET':
         ourmap.update(csrf(request));
-        c = Context(ourmap);
+        context = RequestContext(request, ourmap);
     else: # POST request.
         try:
             ourtarget = request.POST.get("yamlarea");
             composition = yaml.compose_all(ourtarget, Loader12);
-            canon = yaml.serialize_all(composition, 
+            yamlcanon = yaml.serialize_all(composition, 
                 canonical=True, allow_unicode=True);
-            ourmap["state"] = STATE_POST_YES;
-            if len(canon) == 0:
-                ourmap["canon"] = "# This is a comment. Your YAML stream is good, but it contains no documents. "
+            ourmap["yamlstate"] = STATE_POST_YES;
+            if len(yamlcanon) == 0:
+                ourmap["yamlcanon"] = COMMENTSTR
             else:
-                ourmap["canon"] = canon;
+                ourmap["yamlcanon"] = yamlcanon;
         except YAMLError, e:
-            ourmap["state"] = STATE_POST_NO;
-            ourmap["error"] = e.__str__();
-            ourmap["original"] = ourtarget;
+            ourmap["yamlstate"] = STATE_POST_NO;
+            ourmap["yamlerror"] = e.__str__();
+            ourmap["yamloriginal"] = ourtarget;
         ourmap.update(csrf(request));
-        c = RequestContext(request, ourmap);
+        context = RequestContext(request, ourmap);
     
-    return HttpResponse(t.render(c))    
+    return TemplateResponse(request, 'isityaml/isityaml.html', context=context)   
 
 
 

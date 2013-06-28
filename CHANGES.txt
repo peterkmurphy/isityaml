@@ -1,0 +1,2 @@
+v0.1, 30/08/2011 -- Initial release. Took code and made setup script.
+v0.2, 25/04/2013 -- Try to make a half-decent PyPI package.
