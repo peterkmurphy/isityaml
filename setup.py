@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name='isityaml',
-    version='0.4',
+    version='0.4.1',
     description='A Django app for checking the correctness of YAML',
     author='Peter Murphy',
     author_email='peterkmurphy@gmail.com',
@@ -35,6 +35,6 @@ setup(name='isityaml',
         'Operating System :: POSIX',        
         "Topic :: Education",
         ],
-    long_description=open('README.txt').read(),
+    long_description=open('README.rst').read(),
     install_requires = ["Django >= 1.1.1", "PyYAML >= 3.0"],
 )
