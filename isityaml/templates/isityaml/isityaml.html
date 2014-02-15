@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block meta_title %}Is it YAML?{% endblock %}
+{% block title %}Is it YAML?{% endblock %}
 {% block main %}
 
 <script type="text/javascript">
@@ -13,22 +14,26 @@ window.onload=function(){
 <!-- Firefox does not handle white-space:nowrap correctly. --> 
  
 </script>
-<h1>Is it YAML?</h1>
 
 {% if yamlstate == 1 %} <!-- POST result: an error. -->
-
+<div class="alert alert-success">
 <h2>Yes, it is YAML!</h2>
 <p>The file you entered is properly formatted and has been presented in 'canonical' form for your perusal.</p>
+
 <pre class="success">{{ yamlcanon }}&nbsp;</pre>
+</div>
 
 {% endif %}
 {% if yamlstate == 2 %} <!-- POST result: success. -->
-
+<div class="alert alert-error">
 <h2>No, it is not YAML!</h2>
 <p>I'm afraid the text you entered is not legitimate YAML. Here's an error message.</p>
 <pre class="error">{{ yamlerror }}</pre>
+</div>
+<div class="alert alert-info">
 <p>Here's the original text, just so you can check where things went wrong.</p>
 <pre class="info">{{ yamloriginal }}&nbsp;</pre>
+</div>
 {% endif %}
 
 {% if yamlstate != 0 %} <!-- yamlstate = 0 when no POSTing occurred. -->
@@ -41,7 +46,8 @@ text field below and click "Submit" to check if it is YAML. Hit "Reset" to reset
     <legend>Put yer YAML here!</legend>
     <p id="yamlp">
         <label for="yamlarea">But is is properly formatted?</label><br/>
-        <textarea name="yamlarea" id="yamlarea" rows="20" cols="120">Hello world!</textarea>
+        <textarea name="yamlarea" id="yamlarea" rows="20"  style="-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box; box-sizing: border-box; width: 100%;">Hello world!</textarea>
     </p>
     <p>
         <input name="submit" value="Submit" type="submit" />
@@ -83,7 +89,15 @@ parser for YAML. You can get the application from PyPI through the command:</p>
 desired URL in one of the urls.py files.</p> 
 <p>The installation comes with a HTML template file designed to work with 
 <a href="http://mezzanine.jupo.org/">Mezzanine</a>, a Django CMS. You are looking at the result.
-Feel free to customise: the app is released under a 3 clause BSD license.</p>
+Feel free to customise: the app is released under a 3 clause BSD license. If you wish to do any changes,
+pop over to the <a href="https://github.com/peterkmurphy/isityaml">GitHub repository</a> for the app.</p>
+<h2>History</h2>
+<ul>
+<li>0.1 (August 30th 2011) - Create setup script for files.</li>
+<li>0.2 (April 25th 2013) - Try to make a half-decent PyPI package.</li>
+<li>0.3 (January 30th 2014) - Updated to be compatible with Django 1.6 and Mezzanine 3.0.</li>
+<li>0.4 (February 15th 2014) - Added more error handling and styling to be compatible with Bootstrap.</li>
+</ul>
 <p style="text-align: center;"><em>Copyright © <a href="/">Peter Murphy</a>
-2011, 2012, 2013.</em></p>
+2011, 2012, 2013, 2014.</em></p>
 {% endblock %}

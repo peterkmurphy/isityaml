@@ -1,0 +1,14 @@
+CHANGES.txt
+LICENSE.txt
+MANIFEST.in
+README.txt
+setup.py
+isityaml/__init__.py
+isityaml/urls.py
+isityaml/views.py
+isityaml.egg-info/PKG-INFO
+isityaml.egg-info/SOURCES.txt
+isityaml.egg-info/dependency_links.txt
+isityaml.egg-info/requires.txt
+isityaml.egg-info/top_level.txt
+isityaml/templates/isityaml/isityaml.html

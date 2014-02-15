@@ -40,20 +40,26 @@ and add the desired URL in one of the urls.py files.
 The HTML template file used to generate HTML has been redesigned to work with the 
 `Mezzanine <http://mezzanine.jupo.org/>`_ CMS. The redesign removed any explicit
 references to particular stylesheets found with earlier versions. Feel free to
-customise: the app is released under a 3 clause BSD license. See LICENSE.txt for
-more information.
+customise: the app is released under a 3 clause BSD license. See LICENSE.txt for 
+more information. If you wish to do any changes, pop over to the `GitHub repository 
+<https://github.com/peterkmurphy/isityaml>'_ for the app. 
 
-Versions
---------
+History
+-------
+
 
 * 0.1 (August 30th 2011) - Create setup script for files.
 
 * 0.2 (April 25th 2013) - Try to make a half-decent PyPI package.
 
+* 0.3 (January 30th 2014) - Updated to be compatible with Django 1.6 and Mezzanine 3.0.
+
+* 0.4 (February 15th 2014) - Added more error handling and styling to be compatible with Bootstrap.
+
 Copyright
 ---------
 
-The **isityaml** app is copyright (c) 2008-2013 
+The **isityaml** app is copyright (c) 2008-2014 
 `Peter Murphy <http://www.pkmurphy.com.au/>`_ 
 <peterkmurphy@gmail.com>.
 

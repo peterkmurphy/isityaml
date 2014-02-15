@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(name='isityaml',
-    version='0.2.1',
+    version='0.4',
     description='A Django app for checking the correctness of YAML',
     author='Peter Murphy',
     author_email='peterkmurphy@gmail.com',
