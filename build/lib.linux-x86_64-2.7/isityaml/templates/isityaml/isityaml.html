@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block meta_title %}Is it YAML?{% endblock %}
+{% block main %}
+
+<script type="text/javascript">
+function resetIt() {
+document.getElementById('yamlp').firstChild.nodeValue = "";
+}
+window.onload=function(){
+  document.getElementById("yamlarea").wrap='off'; 
+ }
+ 
+<!-- Firefox does not handle white-space:nowrap correctly. --> 
+ 
+</script>
+<h1>Is it YAML?</h1>
+
+{% if yamlstate == 1 %} <!-- POST result: an error. -->
+
+<h2>Yes, it is YAML!</h2>
+<p>The file you entered is properly formatted and has been presented in 'canonical' form for your perusal.</p>
+<pre class="success">{{ yamlcanon }}&nbsp;</pre>
+
+{% endif %}
+{% if yamlstate == 2 %} <!-- POST result: success. -->
+
+<h2>No, it is not YAML!</h2>
+<p>I'm afraid the text you entered is not legitimate YAML. Here's an error message.</p>
+<pre class="error">{{ yamlerror }}</pre>
+<p>Here's the original text, just so you can check where things went wrong.</p>
+<pre class="info">{{ yamloriginal }}&nbsp;</pre>
+{% endif %}
+
+{% if yamlstate != 0 %} <!-- yamlstate = 0 when no POSTing occurred. -->
+<h2>Do you want to have another go?</h2>
+{% endif %}
+<p>Enter some text in the
+text field below and click "Submit" to check if it is YAML. Hit "Reset" to reset the whole contents.</p>
+<form id="textentry" action="." method="post">{% csrf_token %}
+    <fieldset>
+    <legend>Put yer YAML here!</legend>
+    <p id="yamlp">
+        <label for="yamlarea">But is is properly formatted?</label><br/>
+        <textarea name="yamlarea" id="yamlarea" rows="20" cols="120">Hello world!</textarea>
+    </p>
+    <p>
+        <input name="submit" value="Submit" type="submit" />
+        <input type="reset" value="Reset" onClick="resetIt();"/>
+    </p>
+
+    </fieldset>
+</form>
+
+<h2>About</h2>
+<p>"Is it YAML?" is a Django application for checking whether text is <a href="http://www.yaml.org/">YAML</a> (&quot;a
+human friendly data serialization standard for all programming languages&quot;), or <strong>not</strong>. 
+Users type and/or copy and paste text and clicks the "Submit" button above. If valid YAML has been entered,
+the input is presented in 
+<a href="http://www.yaml.org/spec/1.2/spec.html#id2764652">canonical form</a>. Invalid input
+causes the application to present an error message.</p><p>
+YAML is just a text format for exchanging data. It exists for cases where 
+<a href="http://www.w3.org/XML/">XML</a> is too much overhead. I like YAML. I find it
+more robust in practice than XML (where one missing angle bracket could corrupt a whole file),
+yet easier to type by hand.</p>  
+
+<p>I conjured up &quot;Is it YAML?&quot; while writing a specification for
+<a href="https://github.com/peterkmurphy/YPath-Specification">YPath</a> - a language for addressing 
+parts of a YAML document, as 
+<a href="http://www.w3.org/TR/xpath/">XPath</a> does for XML. To do a proper job of things, I had
+to write YAML example files. However, I sometimes needed to check if the example files are good 
+and proper. &quot;Is it YAML?&quot; gave me a test bed where I can copy-and-paste my examples,
+and see if <em>they really are YAML</em>.</p>
+
+<h2>Installation and Dependencies</h2>
+
+<p>Apart from <a href="https://www.djangoproject.com/">Django</a>, the app depends on 
+<a href="https://bitbucket.org/xi/pyyaml">PyYAML</a>, a Python
+parser for YAML. You can get the application from PyPI through the command:</p>
+
+<pre>pip install isityaml</pre>
+
+<p>Once installed, just add "isityaml" to your INSTALLED_APPS list in settings.py, and add the
+desired URL in one of the urls.py files.</p> 
+<p>The installation comes with a HTML template file designed to work with 
+<a href="http://mezzanine.jupo.org/">Mezzanine</a>, a Django CMS. You are looking at the result.
+Feel free to customise: the app is released under a 3 clause BSD license.</p>
+<p style="text-align: center;"><em>Copyright © <a href="/">Peter Murphy</a>
+2011, 2012, 2013.</em></p>
+{% endblock %}
