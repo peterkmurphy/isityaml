@@ -42,7 +42,7 @@ The HTML template file used to generate HTML has been redesigned to work with th
 references to particular stylesheets found with earlier versions. Feel free to
 customise: the app is released under a 3 clause BSD license. See LICENSE.txt for 
 more information. If you wish to do any changes, pop over to the `GitHub repository 
-<https://github.com/peterkmurphy/isityaml>'_ for the app. 
+<https://github.com/peterkmurphy/isityaml>`_ for the app. 
 
 History
 -------
