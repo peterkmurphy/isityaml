@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-from setuptools import setup
+from distutils.core import setup
+#from setuptools import setup
 
 setup(name='isityaml',
-    version='0.4.1',
+    version='0.4.7',
     description='A Django app for checking the correctness of YAML',
     author='Peter Murphy',
     author_email='peterkmurphy@gmail.com',
@@ -36,5 +37,5 @@ setup(name='isityaml',
         "Topic :: Education",
         ],
     long_description=open('README.rst').read(),
-    install_requires = ["Django >= 1.1.1", "PyYAML >= 3.0"],
+    install_requires = ["Django >= 1.1.1", "mezzanine>=3.0","PyYAML >= 3.0"],
 )

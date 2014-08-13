@@ -66,7 +66,13 @@ class Loader12(Reader, Scanner12, Parser, Composer, Constructor, Resolver):
         Scanner12.__init__(self)
         Parser.__init__(self)
         Composer.__init__(self)
-        Constructor.__init__(self)
+        
+# PKM2014 - uses SafeConstructor instead of Constructor. This should make no
+# difference, because "Is it YAML?" only gets as far as the composition stage,
+# but - well: it reduces the risk of something bad happening.
+        
+#        Constructor.__init__(self)
+        SafeConstructor.__init__(self)
         Resolver.__init__(self)
 
 # Here ends the YAML update.
@@ -98,7 +104,10 @@ def index(request):
                 ourmap["yamlcanon"] = COMMENTSTR
             else:
                 ourmap["yamlcanon"] = yamlcanon;
-        except YAMLError, e:
+                
+# PKM2014 - AttributeErrors are now caught.                
+                
+        except (YAMLError, AttributeError) as e:
             ourmap["yamlstate"] = STATE_POST_NO;
             ourmap["yamlerror"] = e.__str__();
             ourmap["yamloriginal"] = ourtarget;

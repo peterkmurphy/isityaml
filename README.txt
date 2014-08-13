@@ -56,6 +56,8 @@ History
 
 * 0.4 (February 15th 2014) - Added more error handling and styling to be compatible with Bootstrap.
 
+* 0.5 (August 13th 2014) - Making error handling more generous. 
+
 Copyright
 ---------
 
