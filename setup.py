@@ -4,7 +4,7 @@ from distutils.core import setup
 #from setuptools import setup
 
 setup(name='isityaml',
-    version='0.4.7',
+    version='0.5',
     description='A Django app for checking the correctness of YAML',
     author='Peter Murphy',
     author_email='peterkmurphy@gmail.com',
