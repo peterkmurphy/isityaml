@@ -1,7 +1,6 @@
-# Deprecated and removed in Django 1.6: 
-# from django.conf.urls.defaults import *
-from django.conf.urls import *
+# Deprecated and removed in Django 1.6:
+# Deprecated and removed in Django 1.6:
+from django.conf.urls import url, include
+from isityaml.views import index as viewindex
 
-urlpatterns = patterns('',
-    (r'^$', 'isityaml.views.index'),    
-)
+urlpatterns =[ url(r'^$', viewindex)]
