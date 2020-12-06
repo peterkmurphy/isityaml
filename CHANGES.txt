@@ -4,3 +4,4 @@ v0.3, 30/01/2014 -- Updated to be compatible with Django 1.6 and Mezzanine 3.0.
 v0.4, 15/02/2014 -- Added more error handling and styling to be compatible with Bootstrap.
 v0.5, 13/08/2014 -- Cleaned up error handling and installation issues.
 v0.6, 28/02/2017 -- Updated to be compatible with Django 1.10.
+v0.7, 06/12/2020 -- Run through 2to3 for Python 3 changes.

@@ -36,14 +36,14 @@ class Scanner12(Scanner):
         '''
         start_mark = self.get_mark()
         indicator = self.peek()
-        if indicator == u'*':
+        if indicator == '*':
             name = 'alias'
         else:
             name = 'anchor'
         self.forward()
         length = 0
         ch = self.peek(length)
-        while ch not in u'\0 \t\r\n\x85\u2028\u2029,[]{}':
+        while ch not in '\0 \t\r\n\x85\u2028\u2029,[]{}':
             length += 1
             ch = self.peek(length)
         if not length:
@@ -53,7 +53,7 @@ class Scanner12(Scanner):
         value = self.prefix(length)
         self.forward(length)
         ch = self.peek()
-        if ch not in u'\0 \t\r\n\x85\u2028\u2029?:,]}%@`':
+        if ch not in '\0 \t\r\n\x85\u2028\u2029?:,]}%@`':
             raise ScannerError("while scanning an %s" % name, start_mark,
                     "expected alphabetic or numeric character, but found %r"
                     % ch.encode('utf-8'), self.get_mark())
@@ -86,9 +86,9 @@ COMMENTSTR = \
 
 @csrf_protect
 def index(request):
-    yamlcanon = u""; # YAML in canonical form.
-    yamlerror = u"" # YAML error messages.
-    yamloriginal = u"" # The original text. Shown only for error messages.
+    yamlcanon = ""; # YAML in canonical form.
+    yamlerror = "" # YAML error messages.
+    yamloriginal = "" # The original text. Shown only for error messages.
     yamlstate = STATE_GET # The state of the page.
     ourmap = {"yamlstate": yamlstate, "yamlcanon": yamlcanon,
         "yamlerror": yamlerror, "yamloriginal": yamloriginal};

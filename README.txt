@@ -60,9 +60,11 @@ History
 
 * 0.6 (February 28th 2017) - Updated to be compatible with Django 1.10.
 
+* 0.7 (December 6th 2020) - Run through 2to3 for Python 3 changes.
+
 Copyright
 ---------
 
-The **isityaml** app is copyright (c) 2008-2017 
+The **isityaml** app is copyright (c) 2008-2020 
 `Peter Murphy <http://www.pkmurphy.com.au/>`_
 <peterkmurphy@gmail.com>.
