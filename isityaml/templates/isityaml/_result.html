@@ -1,0 +1,20 @@
+{% if yamlstate == 1 %}
+  {# POST result: success #}
+  <div class="alert alert-success">
+    <h2>{{ copy.success_heading }}</h2>
+    <p>{{ copy.success_body }}</p>
+    <pre class="success">{{ yamlcanon }}&nbsp;</pre>
+  </div>
+{% endif %}
+{% if yamlstate == 2 %}
+  {# POST result: error #}
+  <div class="alert alert-error">
+    <h2>{{ copy.error_heading }}</h2>
+    <p>{{ copy.error_body }}</p>
+    <pre class="error">{{ yamlerror }}</pre>
+  </div>
+  <div class="alert alert-info">
+    <p>{{ copy.original_body }}</p>
+    <pre class="info">{{ yamloriginal }}&nbsp;</pre>
+  </div>
+{% endif %}

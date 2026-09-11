@@ -1,0 +1,32 @@
+<script>
+window.addEventListener("load", function () {
+  var area = document.getElementById("yamlarea");
+  if (area) {
+    area.wrap = "off";
+  }
+});
+{# Prefer wrap=off for long YAML lines; box model is in isityaml.css. #}
+</script>
+{% if yamlstate != 0 %}
+  {# yamlstate = 0 when no POSTing occurred. #}
+  <h2>{{ copy.another_go_heading }}</h2>
+{% endif %}
+<p>{{ copy.form_intro }}</p>
+<form id="textentry" action="{{ form_action }}" method="post">
+  {% csrf_token %}
+  <fieldset>
+    <legend>{{ copy.form_legend }}</legend>
+    <p id="yamlp">
+      <label for="yamlarea">{{ copy.form_label }}</label>
+      <br />
+      <textarea name="yamlarea"
+                id="yamlarea"
+                class="isityaml-textarea"
+                rows="20">{{ copy.textarea_default }}</textarea>
+    </p>
+    <p>
+      <input name="submit" value="{{ copy.submit_label }}" type="submit" />
+      <input type="reset" value="{{ copy.reset_label }}" />
+    </p>
+  </fieldset>
+</form>

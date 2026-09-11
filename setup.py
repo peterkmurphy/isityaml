@@ -1,40 +1,37 @@
-#!/usr/bin/env python
-
 from setuptools import setup
 
-setup(name='isityaml',
-    version='0.7',
-    description='A Django app for checking the correctness of YAML',
-    author='Peter Murphy',
-    author_email='peterkmurphy@gmail.com',
-    url='http://pypi.python.org/pypi/isityaml/',
-    packages=['isityaml'],
+setup(
+    name="isityaml",
+    version="0.8",
+    description="A Django app (with tags) for checking the correctness of YAML",
+    author="Peter Murphy",
+    author_email="peterkmurphy@gmail.com",
+    url="https://pypi.org/project/isityaml/",
+    packages=["isityaml", "isityaml.templatetags"],
     package_data={
-        'isityaml': [
-            'templates/isityaml/*.html',
+        "isityaml": [
+            "templates/isityaml/*.html",
+            "static/isityaml/*.css",
         ],
     },
-    keywords = 'YAML parse text Django',
-    license='LICENSE.txt',
-    classifiers = [
+    keywords="YAML parse text Django",
+    license="BSD-3-Clause",
+    python_requires=">=3.10",
+    classifiers=[
         "Development Status :: 4 - Beta",
-        "Environment :: Other Environment",
         "Environment :: Web Environment",
+        "Framework :: Django",
+        "Framework :: Django :: 5.2",
         "Intended Audience :: Developers",
         "Intended Audience :: Education",
-        "Intended Audience :: End Users/Desktop",
-        "Intended Audience :: Other Audience",
-        'License :: OSI Approved :: BSD License',
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-        "Development Status :: 4 - Beta",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
-        'Operating System :: MacOS',
-        'Operating System :: Microsoft :: Windows',
-        'Operating System :: POSIX',
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
         "Topic :: Education",
-        ],
-    long_description=open('README.rst').read(),
-    install_requires = ["Django >= 1.1.1", "PyYAML >= 3.0"],
+    ],
+    long_description=open("README.md").read(),  # noqa: SIM115
+    long_description_content_type="text/markdown",
+    install_requires=["Django >= 5.2", "PyYAML >= 6.0"],
 )

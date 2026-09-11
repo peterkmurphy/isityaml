@@ -1,0 +1,20 @@
+# Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Packaging / editable installs
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# Virtualenvs / tooling
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
