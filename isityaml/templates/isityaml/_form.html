@@ -22,7 +22,8 @@ window.addEventListener("load", function () {
       <textarea name="yamlarea"
                 id="yamlarea"
                 class="isityaml-textarea"
-                rows="20">{{ copy.textarea_default }}</textarea>
+                rows="20"
+                maxlength="1000000">{{ copy.textarea_default }}</textarea>
     </p>
     <p>
       <input name="submit" value="{{ copy.submit_label }}" type="submit" />

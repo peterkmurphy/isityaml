@@ -6,6 +6,7 @@ import unittest
 
 from isityaml.yaml_check import (
     COMMENTSTR,
+    MAX_YAML_INPUT_BYTES,
     STATE_GET,
     STATE_POST_NO,
     STATE_POST_YES,
@@ -89,6 +90,20 @@ class TestUnicodeAnchorsAndAliases(unittest.TestCase):
         # Stock loader should also accept ASCII
         docs = list(compose_all(sample, Loader=SafeLoader))
         self.assertGreaterEqual(len(docs), 1)
+
+
+class TestDoSGuards(unittest.TestCase):
+    def test_deep_nesting_returns_failure_not_exception(self):
+        text = "[" * 100_000 + "]" * 100_000
+        result = check_yaml(text)
+        self.assertEqual(result.yamlstate, STATE_POST_NO)
+        self.assertTrue(result.yamlerror)
+
+    def test_oversized_input_rejected(self):
+        text = "a: " + ("x" * (MAX_YAML_INPUT_BYTES + 10))
+        result = check_yaml(text)
+        self.assertEqual(result.yamlstate, STATE_POST_NO)
+        self.assertIn("exceeds", result.yamlerror)
 
 
 if __name__ == "__main__":

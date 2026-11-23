@@ -97,6 +97,11 @@ def empty_check_result() -> YamlCheckResult:
     return YamlCheckResult(yamlstate=STATE_GET)
 
 
+# Bound hostile / accidental megabyte-scale pastes before PyYAML allocates.
+MAX_YAML_INPUT_BYTES = 1_000_000
+MAX_YAML_OUTPUT_CHARS = 2_000_000
+
+
 def check_yaml(text: str | None) -> YamlCheckResult:
     """Compose *text* as YAML and return canonical form or an error.
 
@@ -107,15 +112,38 @@ def check_yaml(text: str | None) -> YamlCheckResult:
     Returns:
         ``YamlCheckResult`` with success (canonical YAML) or failure details.
     """
+    if text is None:
+        return YamlCheckResult(yamlstate=STATE_POST_NO, yamlerror="No YAML provided.", yamloriginal="")
+
+    raw = text if isinstance(text, str) else str(text)
+    if len(raw.encode("utf-8")) > MAX_YAML_INPUT_BYTES:
+        return YamlCheckResult(
+            yamlstate=STATE_POST_NO,
+            yamlerror=f"YAML input exceeds {MAX_YAML_INPUT_BYTES} bytes.",
+            yamloriginal=raw[:2000],
+        )
+
     try:
-        composition = compose_all(text, Loader12)
+        composition = compose_all(raw, Loader12)
         yamlcanon = serialize_all(composition, canonical=True, allow_unicode=True)
         if len(yamlcanon) == 0:
             yamlcanon = COMMENTSTR
+        if len(yamlcanon) > MAX_YAML_OUTPUT_CHARS:
+            return YamlCheckResult(
+                yamlstate=STATE_POST_NO,
+                yamlerror="Canonical YAML output is too large.",
+                yamloriginal=raw[:2000],
+            )
         return YamlCheckResult(yamlstate=STATE_POST_YES, yamlcanon=yamlcanon)
     except (YAMLError, AttributeError, TypeError) as e:
         return YamlCheckResult(
             yamlstate=STATE_POST_NO,
             yamlerror=str(e),
-            yamloriginal=text if text is not None else "",
+            yamloriginal=raw,
+        )
+    except (RecursionError, MemoryError):
+        return YamlCheckResult(
+            yamlstate=STATE_POST_NO,
+            yamlerror="YAML is too deeply nested or too large to process.",
+            yamloriginal=raw[:2000],
         )
